@@ -49,79 +49,79 @@ function generatePrompt(data) {
       adjectives: ['blazing', 'flaming', 'ember-filled', 'heat-distorted'],
       materials: ['molten', 'incandescent', 'glowing ember'],
       effects: ['dancing flames', 'floating embers', 'heat shimmer', 'smoke wisps'],
-      background: 'fiery backdrop with燃烧火焰和飘动的余烬'
+      background: 'fiery backdrop with dancing flames and floating embers'
     },
     'ice': {
       adjectives: ['frozen', 'crystalline', 'frost-covered', 'glacial'],
       materials: ['ice', 'frost', 'crystal'],
       effects: ['ice crystals', 'frost particles', 'reflective frost', 'snowflakes'],
-      background: 'frozen winter scene with冰晶和霜冻'
+      background: 'frozen winter scene with ice crystals and frost'
     },
     'ocean-wave': {
       adjectives: ['oceanic', 'sea-sprayed', 'tidal', 'aquatic'],
       materials: ['water', 'seafoam', 'salt water'],
       effects: ['water splashes', 'seafoam', 'reflections', 'underwater caustics'],
-      background: 'vast ocean with波光粼粼的海面'
+      background: 'vast ocean with sparkling waves'
     },
     'cloud-sky': {
       adjectives: ['ethereal', 'fluffy', 'dreamy', 'wispy'],
       materials: ['cloud', 'vapor', 'mist'],
       effects: ['soft clouds', 'light rays', 'vapor trails', 'mist'],
-      background: 'dreamy sky with飘逸的云朵'
+      background: 'dreamy sky with floating clouds'
     },
     'molten-lava': {
       adjectives: ['molten', 'scorching', 'volcanic', 'igneous'],
       materials: ['lava', 'magma', 'molten rock'],
       effects: ['lava flows', 'cracks', 'glowing veins', 'heat glow'],
-      background: 'volcanic landscape with流动的熔岩'
+      background: 'volcanic landscape with flowing lava'
     },
     'glacier-ice': {
       adjectives: ['arctic', 'pristine', 'glacial', 'frozen'],
       materials: ['ice', 'frozen water', 'glacier'],
       effects: ['ice shards', 'frozen crystals', 'fog', 'reflection'],
-      background: 'arctic glacier scene with巨大的冰块'
+      background: 'arctic glacier scene with massive ice formations'
     },
     'lightning': {
       adjectives: ['electric', 'crackling', 'thunderous', 'electrified'],
       materials: ['energy', 'plasma', 'electricity'],
       effects: ['lightning bolts', 'electric arcs', 'plasma', 'static'],
-      background: 'stormy atmosphere with闪电撕裂天空'
+      background: 'stormy atmosphere with lightning striking the sky'
     },
     'neon-glass': {
       adjectives: ['glowing', 'cyberpunk', 'neon-lit', 'luminous'],
       materials: ['glass', 'neon', 'light-emitting'],
       effects: ['neon glow', 'light streaks', 'reflections', 'color bloom'],
-      background: 'neon-lit cyberpunk city with霓虹灯光'
+      background: 'neon-lit cyberpunk city with vibrant lights'
     },
     'liquid-gold': {
       adjectives: ['golden', 'luxurious', 'metallic', 'wealthy'],
       materials: ['gold', 'liquid metal', 'bronze'],
       effects: ['golden reflections', 'liquid flow', 'shine', 'metallic sheen'],
-      background: 'luxury setting with流淌的液态黄金'
+      background: 'luxury setting with flowing liquid gold'
     },
     'dark-smoke': {
       adjectives: ['mysterious', 'shadowy', 'enigmatic', 'dense'],
       materials: ['smoke', 'fog', 'dark vapor'],
       effects: ['smoke tendrils', 'dark mist', 'particles', 'shadow layers'],
-      background: 'mysterious void with翻腾的黑暗烟雾'
+      background: 'mysterious void with swirling dark smoke'
     },
     'crystal': {
       adjectives: ['prismatic', 'faceted', 'brilliant', 'sparkling'],
       materials: ['crystal', 'gemstone', 'quartz'],
       effects: ['light refraction', 'rainbow sparkles', 'crystal facets', 'prismatic beams'],
-      background: 'crystal cavern with折射的彩虹光芒'
+      background: 'crystal cavern with refracting rainbow light'
     },
     'rusted-steel': {
       adjectives: ['weathered', 'aged', 'corroded', 'industrial'],
       materials: ['rusted metal', 'steel', 'oxidation'],
       effects: ['rust texture', 'patina', 'corrosion', 'metal scratches'],
-      background: 'industrial ruin with锈蚀的金属'
+      background: 'industrial ruin with rusted metal'
     },
     'transformers': {
       adjectives: ['mechanical', 'robotic', 'metallic', 'futuristic'],
       materials: ['metal', 'chrome', 'machinery'],
       effects: ['mechanical details', 'metal shine', 'tech circuits', 'robotic elements'],
-      background: 'sci-fi mech environment with机械细节'
+      background: 'sci-fi mech environment with mechanical details'
     }
   };
 
@@ -169,13 +169,15 @@ function generatePrompt(data) {
   const cameraDesc = cameraDescriptions[camera] || 'front-facing camera angle';
   const aspectDesc = aspectDescriptions[aspectRatio] || 'square format';
 
+  const envDescription = environment || elementData.background;
+
   let prompt = `A stunning 3D rendered text "${text.toUpperCase()}" featuring ${fontDesc},`;
 
   prompt += ` with ${elementData.adjectives.join(', ')} ${elementData.materials.join(', ')} material texture,`;
 
   prompt += ` surrounded by ${elementData.effects.join(', ')},`;
 
-  prompt += ` set against ${elementData.background},`;
+  prompt += ` set against ${envDescription},`;
 
   prompt += ` illuminated by ${lightingDesc},`;
 

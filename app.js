@@ -309,7 +309,7 @@
       'dramatic-shadows': 'deep dramatic shadows'
     };
 
-    let prompt = `A stunning 3D rendered text "${text.toUpperCase()}" featuring ${fontDesc}, with ${elementData.effects.join(', ')}, set against ${elementData.background}, illuminated by ${lightingDesc}, captured from ${cameraDesc}, rendered in ${aspectDesc}`;
+    let prompt = `A stunning 3D rendered text "${text.toUpperCase()}" featuring ${fontDesc}, with ${elementData.effects.join(', ')}, set against ${environment || elementData.background}, illuminated by ${lightingDesc}, captured from ${cameraDesc}, rendered in ${aspectDesc}`;
 
     if (boosters && boosters.length > 0) {
       const selectedBoosters = boosters.map(b => boosterDesc[b]).filter(Boolean);
