@@ -222,6 +222,9 @@
         if (data.success) {
           state.generatedPrompt = data.prompt;
           renderOutput();
+          state.isLoading = false;
+          btn.innerHTML = '<span>✨</span> Generate Prompt';
+          updateGenerateButton();
           return;
         }
       }
