@@ -427,12 +427,46 @@
     }
   }
 
+  // Welcome Popup Typing Effect
+  function initWelcomePopup() {
+    const popup = document.getElementById('welcome-popup');
+    const typingText = document.getElementById('typing-text');
+    const enterBtn = document.getElementById('enter-btn');
+    
+    if (!popup || !typingText || !enterBtn) return;
+
+    const message = "Welcome to 3D Text Rendering by Samael — feel free to donate :* 🌌";
+    let index = 0;
+    const speed = 40;
+
+    function typeWriter() {
+      if (index < message.length) {
+        typingText.innerHTML = message.substring(0, index + 1) + '<span class="cursor"></span>';
+        index++;
+        setTimeout(typeWriter, speed);
+      } else {
+        typingText.innerHTML = message + '<span class="cursor"></span>';
+      }
+    }
+
+    typeWriter();
+
+    enterBtn.addEventListener('click', function() {
+      popup.style.opacity = '0';
+      popup.style.transition = 'opacity 0.3s ease';
+      setTimeout(function() {
+        popup.style.display = 'none';
+      }, 300);
+    });
+  }
+
   function init() {
     document.addEventListener('click', handleClick);
     document.addEventListener('input', handleInput);
     renderOptions();
     updateCharCounter();
     updateGenerateButton();
+    initWelcomePopup();
   }
 
   document.addEventListener('DOMContentLoaded', init);
