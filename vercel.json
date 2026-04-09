@@ -1,6 +1,9 @@
 {
+  "buildCommand": "echo 'Static site - no build required'",
+  "outputDirectory": ".",
   "routes": [
-    { "src": "^/$", "dest": "/public/index.html" },
-    { "src": "^/api/(.*)", "dest": "/api/$1" }
+    { "src": "^/api/(.*)", "dest": "/api/$1" },
+    { "handle": "filesystem" },
+    { "src": "/.*", "dest": "/index.html" }
   ]
 }

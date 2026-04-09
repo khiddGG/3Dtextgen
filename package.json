@@ -4,9 +4,9 @@
   "description": "A production-ready 3D text prompt builder optimized for Vercel deployment",
   "main": "index.js",
   "scripts": {
-    "dev": "echo \"Use 'npx serve .' to run locally or deploy to Vercel\"",
+    "build": "echo 'Static site - no build required'",
+    "dev": "echo \"Use 'npx serve .' to run locally\"",
     "start": "echo \"Use 'npx serve .' to run locally\"",
-    "build": "echo \"No build needed\"",
     "deploy": "vercel --prod"
   },
   "keywords": [
