@@ -84,12 +84,7 @@
   }
 
   function canGenerate() {
-    return state.text.trim().length > 0 && 
-           state.font && 
-           state.element && 
-           state.environment && 
-           state.lighting && 
-           state.camera;
+    return state.text.trim().length > 0;
   }
 
   function updateCharCounter() {
@@ -99,11 +94,14 @@
     }
   }
 
-  function updateGenerateButton() {
-    const btn = document.getElementById('generate-btn');
-    if (btn) {
-      btn.disabled = !canGenerate() || state.isLoading;
+  function autoGenerate() {
+    if (canGenerate() && state.generatedPrompt) {
+      generatePrompt();
     }
+  }
+
+  function updateGenerateButton() {
+    // Button always enabled
   }
 
   function renderOptions() {
@@ -209,21 +207,39 @@
     const btn = document.getElementById('generate-btn');
     btn.innerHTML = '<span class="spinner">⏳</span> Generating...';
 
+    // Use defaults if not selected
+    const font = state.font || 'cinematic-bold';
+    const element = state.element || 'fire';
+    const environment = state.environment || 'Volcanic Field';
+    const lighting = state.lighting || 'golden-hour';
+    const camera = state.camera || 'front-on';
+
+    const data = {
+      text: state.text,
+      font,
+      element,
+      environment,
+      lighting,
+      camera,
+      aspectRatio: state.aspectRatio,
+      boosters: state.boosters
+    };
+
     try {
       // Try API first (works on Vercel)
       const response = await fetch('/api/generate', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(state)
+        body: JSON.stringify(data)
       });
 
       if (response.ok) {
-        const data = await response.json();
-        if (data.success) {
-          state.generatedPrompt = data.prompt;
+        const result = await response.json();
+        if (result.success) {
+          state.generatedPrompt = result.prompt;
           renderOutput();
           state.isLoading = false;
-          btn.innerHTML = '<span>✨</span> Generate Prompt';
+          btn.innerHTML = '<span>✨</span> Regenerate';
           updateGenerateButton();
           return;
         }
@@ -233,11 +249,21 @@
     }
 
     // Fallback: generate locally
-    state.generatedPrompt = generatePromptLocal(state);
+    const localData = {
+      text: state.text,
+      font: state.font || 'cinematic-bold',
+      element: state.element || 'fire',
+      environment: state.environment || 'Volcanic Field',
+      lighting: state.lighting || 'golden-hour',
+      camera: state.camera || 'front-on',
+      aspectRatio: state.aspectRatio,
+      boosters: state.boosters
+    };
+    state.generatedPrompt = generatePromptLocal(localData);
     renderOutput();
     
     state.isLoading = false;
-    btn.innerHTML = '<span>✨</span> Generate Prompt';
+    btn.innerHTML = '<span>✨</span> Regenerate';
     updateGenerateButton();
   }
 
@@ -394,6 +420,7 @@
       else if (type === 'aspect') state.aspectRatio = id;
 
       renderOptions();
+      autoGenerate();
     }
 
     if (booster) {
@@ -402,12 +429,13 @@
       if (idx > -1) state.boosters.splice(idx, 1);
       else state.boosters.push(id);
       renderOptions();
+      autoGenerate();
     }
 
     if (envOption) {
       state.environment = envOption.dataset.id;
       renderEnvironment();
-      updateGenerateButton();
+      autoGenerate();
     }
 
     if (e.target.closest('#generate-btn')) {
@@ -423,7 +451,7 @@
     if (e.target.id === 'text-input') {
       state.text = e.target.value.slice(0, 20);
       updateCharCounter();
-      updateGenerateButton();
+      autoGenerate();
     }
   }
 
