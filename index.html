@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>3D Text Prompt Builder</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <header class="header">
+       <h1>sir moms ?</h1>
+      <h1>3D Text Prompt Builder</h1>
+      <p class="subtitle">Create professional AI prompts for 3D text generation</p>
+    </header>
+
+    <div class="left-panel">
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">📝</span>
+          Text Input
+        </div>
+        <div class="text-input-wrapper">
+          <input type="text" id="text-input" placeholder="Enter your text (max 20 characters)..." maxlength="20">
+          <span id="char-counter" class="char-counter">0/20</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🔤</span>
+          Font Style
+        </div>
+        <div id="fonts-container" class="options-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🔥</span>
+          Elemental Style
+        </div>
+        <div id="elements-container" class="options-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">🌍</span>
+          Environment
+        </div>
+        <div id="environment-container">
+          <p class="env-placeholder">Select an elemental style first</p>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">💡</span>
+          Lighting Mode
+        </div>
+        <div id="lighting-container" class="options-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">📷</span>
+          Camera Angle
+        </div>
+        <div id="camera-container" class="options-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">📐</span>
+          Aspect Ratio
+        </div>
+        <div id="aspect-container" class="options-grid"></div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <span class="icon">⚡</span>
+          Quality Boosters
+          <span class="badge">Multi-select</span>
+        </div>
+        <div id="boosters-container" class="booster-grid"></div>
+      </div>
+    </div>
+
+    <div class="right-panel">
+      <div class="card">
+        <button id="generate-btn" class="generate-btn" disabled>
+          <span>✨</span>
+          Generate Prompt
+        </button>
+      </div>
+
+      <div id="output-card" class="output-card">
+        <div class="output-header">
+          <h3>Generated Prompt</h3>
+          <button id="copy-btn" class="copy-btn">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path>
+            </svg>
+            Copy
+          </button>
+        </div>
+        <div class="prompt-display">
+          <p id="prompt-text"></p>
+        </div>
+        <div class="platform-section">
+          <p>Open in:</p>
+          <div class="platform-btns">
+            <a href="#" id="btn-chatgpt" class="platform-btn chatgpt" target="_blank">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M22.2819 9.8211a5.9847 5.9847 0 0 0-.5157-4.9108 6.0462 6.0462 0 0 0-6.5098-2.9A6.0651 6.0651 0 0 0 4.9807 4.1818a5.9847 5.9847 0 0 0-3.9977 2.9 6.0462 6.0462 0 0 0 .7427 7.0966 5.98 5.98 0 0 0 .511 4.9107 6.051 6.051 0 0 0 6.5146 2.9001A5.9847 5.9847 0 0 0 13.2599 24a6.0557 6.0557 0 0 0 5.7718-4.2058 5.9894 5.9894 0 0 0 3.9977-2.9001 6.0557 6.0557 0 0 0-.7475-7.0729z"/></svg>
+              ChatGPT
+            </a>
+            <a href="#" id="btn-gemini" class="platform-btn gemini" target="_blank">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+              Gemini
+            </a>
+            <a href="#" id="btn-midjourney" class="platform-btn midjourney" target="_blank">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="10"/></svg>
+              Midjourney
+            </a>
+            <a href="#" id="btn-ideogram" class="platform-btn ideogram" target="_blank">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2z"/></svg>
+              Ideogram
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="data/options.js"></script>
+  <script src="components/state.js"></script>
+  <script src="components/events.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
